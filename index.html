@@ -264,7 +264,7 @@
 
 			}
 
-			async function calculateMeanByDevice(){
+			window.calculateMeanByDevice = async function(){
 				const snapshot = await getDocs(collection(db, "tap_logs"));
 				let androidTotal = 0, androidCount = 0;
 				let pcTotal = 0, pcCount = 0;
