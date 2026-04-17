@@ -52,40 +52,21 @@
 
 				}else{
 
-					//console.log("Odd");
-					//showFeedback = false;
-
 				}
 
 				uniqueIdentifier = d.getTime();
 				var randomNumber = Math.floor(Math.random() * 42);
 				uniqueIdentifier=uniqueIdentifier+""+randomNumber;
-				//console.log("ID:"+uniqueIdentifier+","+randomNumber);
-
-				/*el.addEventListener('mousedown', tapityTap("mousedown"));
-				el.addEventListener('mouseup', tapityTap("mouseup"));
-
-				el.addEventListener('touchdown', tapityTap("touchdown"));
-				el.addEventListener('touchup', tapityTap("touchup"));*/
-				/*["mouseup","mousedown","mouseout","click","dblclick","touchstart","touchend",
-         		"touchleave","touchmove","touchcancel"].forEach(function(te) {
-     			el.addEventListener(te, tapityTap);
- 				});*/
-
-				//Set mouse and touch listeners
-				//tapityTap() is set as the common listener for the events
+			
 				["mouseup","mousedown","touchstart","touchend"].forEach(function(te) {
      			el.addEventListener(te, tapityTap);
  				});
 
- 				//document.getElementById("tapHere").innerHTML = "<span class='span2'>Tap here</span>";
 			}
 
 			window.saveDependentVariable = function(dVariable){
 
 				dependentVariable = dVariable;
-				//document.getElementById("variable1").style.display = "none";
-				//document.getElementById("variable2").style.display = "none";
 				document.getElementById("buttoncontainer").style.display = "none";
 				document.getElementById("container").style.display = "inline-block";
 
@@ -114,29 +95,16 @@
 					document.getElementById("counter").innerHTML = "Error saving data";
 			}
 		}
-				//var getLookups = "saveTaps.php?id="+uniqueIdentifier+"&var="+dependentVariable+"&taps=["+tapLogsArray+"]";
-				//var url = "saveTaps.php";
-				//var params ="id="+uniqueIdentifier+"&var="+dependentVariable+"&taps=["+tapLogsArray+"]";
-				//xmlhttp.open("POST",url,true);
-				//xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-				//xmlhttp.send(params);
 
 			function tapityTap(tep){
-
-				//get handle to the tap area element
-				//var el = document.getElementById("tapHere");
+				
 				d = new Date();
 
-				//var n = d.getTime();
-
-				//get the event type
 				var te = tep.type;
 
-				//update the text of the action element
 				document.getElementById("action").innerHTML = te;
 
 				console.log("Ready:"+te);
-				//document.getElementById("tapHere").innerHTML = "I am listening: "+te;
 
 				switch(te){
 
@@ -155,33 +123,24 @@
 
 					case "mouseup":
 					endTap = d.getTime();
-					var duration = (endTap - startTap);
-					//tapCounter++;					
+					var duration = (endTap - startTap);				
 
 					//handle exception 
 					if(startTap ==0 || endTap == 0){
 
-						//console.log("Tap count:"+tapCounter + "; Tap duration:"+duration +" millisec");
 						tapLog += "<br>Tap #"+tapCounter + "; One of the timestamps is 0.";
 
 
 					}else if(startTap>0 && endTap >0 && (startTap > endTap)){
 
-						//console.log("Tap count:"+tapCounter + "; Tap duration:"+duration +" millisec");
-						//tapLog += "<br>Tap count:"+tapCounter + "; Start timestamp larger than end timestamp";
-						
-
 					}else{
 
 						console.log("Tap #"+tapCounter + "; Tap duration:"+duration +" ms");
 						tapCounter++;	
-						//tapTimeArray.push(duration);
 						totalTouchDuration+=duration;
 						var meanTouchDuration = totalTouchDuration / tapCounter;
 
 						var tap = {};
-						//tap["ID"]=uniqueIdentifier;
-						//tap["dependentVariable"] = dependentVariable;
 						tap["tapSequenceNumber"]=tapCounter;
 						tap["startTimestamp"]=startTap;
 						tap["endTimestamp"]=endTap;
@@ -191,17 +150,13 @@
 							tap["interface"]= "feedbackshown";
 						else
 							tap["interface"]= "nofeedback";
-						//console.log(tap);
-						//console.log("Tap string:"+JSON.stringify(tap));
 
 						tapLogsArray.push(JSON.stringify(tap));
 
 						tapLog += "<br>Tap #"+tapCounter + "; Tap duration:"+duration +" ms";
-
-						//if(tapCounter>=tapLimit || ((endTap - tapSessionStartTime)/1000) >60 ){
+						
 						if(tapCounter>=tapLimit){
 							
-							//console.log(JSON.stringify(tapLogsArray));
 							interfaceSequence++;
 
 							if(interfaceSequence <= interfaceVariations){
@@ -209,33 +164,23 @@
 								document.getElementById("counter").innerHTML = '<span class="spanWhite">Mean tap duration: <span class="spanTime">'+Math.round(meanTouchDuration,2)+'</span> ms</span>';
 								document.getElementById("continue").style.display="block";
 								document.getElementById("tapHere").style.display="none";
-								//console.log(tapLogsArray.toString());
-								//syncToServer();
 
 							}else{
 							
 								document.getElementById("counter").innerHTML = '<span class="spanWhite">Mean tap duration: <span class="spanTime">'+Math.round(meanTouchDuration,2)+'</span> ms</span>';
 								document.getElementById("tapHere").style.display="none";
-								//console.log(tapLogsArray.toString());
+								
 								syncToServer();
 							}
 
 							return;
 						}
 
-						//Update the tap# and mean touch duration time  
-						//document.getElementById("counter").innerHTML= "Tap #"+tapCounter+" Mean touch duration: <span class='spanTime'>"+Math.round(meanTouchDuration,2)+"</span> ms";
 						if(showFeedback)
 							document.getElementById("counter").innerHTML= "Mean tap duration: <span class='spanTime'>"+Math.round(meanTouchDuration,2)+"</span> ms";
 
-						//console.log(tapLogsArray);
-						//console.log(tapLogsArray.toString());
-						//document.getElementById("tapHere").innerHTML= tapLog;
 					}
 
-					//console.log(tapLog);
-					//document.getElementById("tapHere").innerHTML= tapLog ;
-					//document.getElementById("counter").innerHTML= tapCounter ;
 
 					startTap = 0;
 					endTap = 0;
@@ -245,7 +190,6 @@
 
 				}
 
-				//alert("Its is a tap");
 			}
 
 			window.startNext = function(){
