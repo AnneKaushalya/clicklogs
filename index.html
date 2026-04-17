@@ -253,18 +253,6 @@
 						pcCount++;
 					}
 				});
-				
-				const androidMean = androidTotal / androidCount;
-				const pcMean = pcTotal / pcCount;
-				
-				console.log("Android Mean:", androidMean);
-				console.log("PC Mean:", pcMean);
-			});
-			
-			window.addEventListener("load", async () => {
-				
-				const snapshot = await getDocs(collection(db, "tap_logs"));
-				
 				let sessions = {};
 				
 				snapshot.forEach(doc => {
@@ -289,6 +277,11 @@
 					}
 				}
 				
+				const androidMean = androidTotal / androidCount;
+				const pcMean = pcTotal / pcCount;
+				
+				console.log("Android Mean:", androidMean);
+				console.log("PC Mean:", pcMean);
 				console.log("Completed sessions:", completed);
 				console.log("Dropped sessions:", dropped);
 			});
