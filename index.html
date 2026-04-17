@@ -261,6 +261,38 @@
 				console.log("PC Mean:", pcMean);
 			});
 			
+			window.addEventListener("load", async () => {
+				
+				const snapshot = await getDocs(collection(db, "tap_logs"));
+				
+				let sessions = {};
+				
+				snapshot.forEach(doc => {
+					const data = doc.data();
+					const sessionId = data.session_id;
+					
+					if (!sessions[sessionId]) {
+						sessions[sessionId] = new Set();
+					}
+					
+					sessions[sessionId].add(data.interface_type);
+				});
+				
+				let completed = 0;
+				let dropped = 0;
+			
+				for (let session in sessions) {
+					if (sessions[session].size === 2) {
+						completed++;
+					} else {
+						dropped++;
+					}
+				}
+				
+				console.log("Completed sessions:", completed);
+				console.log("Dropped sessions:", dropped);
+			});
+			
 		</script>
 
 	</head>
