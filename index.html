@@ -80,7 +80,7 @@
  				//document.getElementById("tapHere").innerHTML = "<span class='span2'>Tap here</span>";
 			}
 
-			function saveDependentVariable(dVariable){
+			window.saveDependentVariable = function(dVariable){
 
 				dependentVariable = dVariable;
 				//document.getElementById("variable1").style.display = "none";
@@ -91,10 +91,10 @@
 			}
 
 			async function syncToServer(){
-
-				for (let tap of tapLogsArray){
-
-					    let t = JSON.parse(tap);
+				try {
+					for (let tap of tapLogsArray){
+						
+						let t = JSON.parse(tap);
 						
 						await addDoc(collection(db, "tap_logs"), {
 							session_id: uniqueIdentifier.toString(),
@@ -106,8 +106,12 @@
 							interface_type: t.interface
 						});
 					}
-					document.getElementById("counter").innerHTML = "Data saved!";
+					document.getElementById("counter").innerHTML = "Data saved!";	
+			} catch (error) {
+					console.error(error);
+					document.getElementById("counter").innerHTML = "Error saving data";
 				}
+			}
 				//var getLookups = "saveTaps.php?id="+uniqueIdentifier+"&var="+dependentVariable+"&taps=["+tapLogsArray+"]";
 				var url = "saveTaps.php";
 				var params ="id="+uniqueIdentifier+"&var="+dependentVariable+"&taps=["+tapLogsArray+"]";
@@ -244,7 +248,7 @@
 				//alert("Its is a tap");
 			}
 
-			function startNext(){
+			window.startNext = function(){
 				startTap = 0;
 				endTap = 0;
 				tapCounter = 0;
