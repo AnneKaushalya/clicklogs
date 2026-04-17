@@ -263,6 +263,31 @@
 
 			}
 
+			import { getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+			async function calculateMeanByDevice(){
+				const snapshot = await getDocs(collection(db, "tap_logs"));
+				let androidTotal = 0, androidCount = 0;
+				let pcTotal = 0, pcCount = 0;
+				
+				snapshot.forEach(doc => {
+					const data = doc.data();
+					if(data.device === "android"){
+						androidTotal += data.duration;
+						androidCount++;
+					}
+					
+					if(data.device === "pc"){
+						pcTotal += data.duration;
+						pcCount++;
+					}
+				});
+				
+				const androidMean = androidTotal / androidCount;
+				const pcMean = pcTotal / pcCount;
+				console.log("Android Mean:", androidMean);
+				console.log("PC Mean:", pcMean);
+			}
+
 		</script>
 
 	</head>
