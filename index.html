@@ -288,9 +288,11 @@
 				console.log("PC Mean:", pcMean);
 			}
 			
-			window.runAnalysis = async function(){
+			window.addEventListener("load", async () => {
+				console.log("Running analysis...");
 				
 				const snapshot = await getDocs(collection(db, "tap_logs"));
+				
 				let androidTotal = 0, androidCount = 0;
 				let pcTotal = 0, pcCount = 0;
 				
@@ -301,6 +303,7 @@
 						androidTotal += data.duration;
 						androidCount++;
 					}
+					
 					if(data.device === "pc"){
 						pcTotal += data.duration;
 						pcCount++;
@@ -310,9 +313,10 @@
 				const androidMean = androidTotal / androidCount;
 				const pcMean = pcTotal / pcCount;
 				
-				alert("Android Mean: " + androidMean + "\nPC Mean: " + pcMean);
-			}
-
+				console.log("Android Mean:", androidMean);
+				console.log("PC Mean:", pcMean);
+			});
+			
 		</script>
 
 	</head>
@@ -324,7 +328,6 @@
 				<button type="button" onclick="saveDependentVariable('pc')" id="variable2">PC</button>
 			</div>
 			<div id="container" class="container">
-				<button onclick="runAnalysis()">Calculate Means</button>
 				<div id="counter"></div>
 				<div id="action"></div>
 				<button id="tapHere"><img src="round_touch_app_white_36dp.png"/></button>
